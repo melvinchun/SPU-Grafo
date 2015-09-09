@@ -29,4 +29,11 @@ public class Arista {
     public void setPeso(int peso) {
         this.peso = peso;
     }
+
+    @Override
+    public String toString() {
+        return "Arista destino=" + destino + ", peso=" + peso;
+    }
+    
+    
 }
