@@ -32,7 +32,7 @@ public class Arista {
 
     @Override
     public String toString() {
-        return "Arista destino=" + destino + ", peso=" + peso;
+        return "Destino: " + destino + ", peso: " + peso;
     }
     
     

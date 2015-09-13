@@ -20,6 +20,7 @@ import java.util.Random;
 import java.util.Scanner;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -74,6 +75,17 @@ public class Gui extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         salvar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        modificarv = new javax.swing.JDialog();
+        jPanel2 = new javax.swing.JPanel();
+        mnombre = new javax.swing.JTextField();
+        maristas = new javax.swing.JComboBox();
+        magregar_arista = new javax.swing.JButton();
+        mpeso = new javax.swing.JSpinner();
+        jLabel4 = new javax.swing.JLabel();
+        msalvar = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        lista = new javax.swing.JList();
         menu1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         b_cargar = new javax.swing.JButton();
@@ -98,6 +110,11 @@ public class Gui extends javax.swing.JFrame {
         menupop.add(Eliminar);
 
         Modificar.setText("Modificar");
+        Modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ModificarActionPerformed(evt);
+            }
+        });
         menupop.add(Modificar);
 
         agregar.setText("Agregar");
@@ -202,6 +219,116 @@ public class Gui extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
+        jPanel2.setBackground(new java.awt.Color(0, 0, 0));
+
+        mnombre.setBackground(new java.awt.Color(204, 204, 204));
+        mnombre.setFont(new java.awt.Font("8BIT WONDER", 0, 18)); // NOI18N
+
+        maristas.setBackground(new java.awt.Color(0, 0, 0));
+        maristas.setFont(new java.awt.Font("8BIT WONDER", 0, 14)); // NOI18N
+        maristas.setForeground(new java.awt.Color(153, 153, 153));
+        maristas.setAlignmentX(1.0F);
+        maristas.setAlignmentY(1.0F);
+        maristas.setMinimumSize(new java.awt.Dimension(175, 37));
+        maristas.setPreferredSize(new java.awt.Dimension(165, 37));
+        maristas.setSize(new java.awt.Dimension(106, 37));
+
+        magregar_arista.setFont(new java.awt.Font("8BIT WONDER", 0, 14)); // NOI18N
+        magregar_arista.setText("Agregar Arista");
+        magregar_arista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                magregar_aristaActionPerformed(evt);
+            }
+        });
+
+        mpeso.setFont(new java.awt.Font("8BIT WONDER", 0, 18)); // NOI18N
+
+        jLabel4.setFont(new java.awt.Font("8BIT WONDER", 0, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("AristAS");
+
+        msalvar.setFont(new java.awt.Font("8BIT WONDER", 0, 14)); // NOI18N
+        msalvar.setText("Guardar Planeta");
+        msalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                msalvarActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setFont(new java.awt.Font("8BIT WONDER", 0, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Nombre");
+
+        lista.setFont(new java.awt.Font("8BIT WONDER", 0, 12)); // NOI18N
+        lista.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(lista);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(msalvar)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(magregar_arista)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(maristas, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(mpeso, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(mnombre)))
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 451, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(51, 51, 51)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(mnombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(maristas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(mpeso, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(magregar_arista)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(msalvar)
+                .addContainerGap(18, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout modificarvLayout = new javax.swing.GroupLayout(modificarv.getContentPane());
+        modificarv.getContentPane().setLayout(modificarvLayout);
+        modificarvLayout.setHorizontalGroup(
+            modificarvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(modificarvLayout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        modificarvLayout.setVerticalGroup(
+            modificarvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, modificarvLayout.createSequentialGroup()
+                .addGap(0, 6, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
 
@@ -256,20 +383,18 @@ public class Gui extends javax.swing.JFrame {
         getContentPane().add(menu1);
         menu1.setBounds(10, 0, 420, 600);
 
-        b_viajar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/prueba.png"))); // NOI18N
+        b_viajar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/viajar.png"))); // NOI18N
         b_viajar.setBorderPainted(false);
         b_viajar.setContentAreaFilled(false);
-        b_viajar.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/prueba2.png"))); // NOI18N
         b_viajar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 b_viajarActionPerformed(evt);
             }
         });
 
-        b_iniciar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/prueba.png"))); // NOI18N
+        b_iniciar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/warp.png"))); // NOI18N
         b_iniciar1.setBorderPainted(false);
         b_iniciar1.setContentAreaFilled(false);
-        b_iniciar1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/prueba2.png"))); // NOI18N
         b_iniciar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 b_iniciar1ActionPerformed(evt);
@@ -288,25 +413,25 @@ public class Gui extends javax.swing.JFrame {
             .addGroup(menu2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(menu2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(b_iniciar1)
                     .addComponent(viaje)
-                    .addComponent(b_viajar))
+                    .addComponent(b_viajar)
+                    .addComponent(b_iniciar1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         menu2Layout.setVerticalGroup(
             menu2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(menu2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(viaje)
+                .addComponent(viaje, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(b_viajar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(b_iniciar1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         getContentPane().add(menu2);
-        menu2.setBounds(440, 80, 450, 270);
+        menu2.setBounds(440, 10, 450, 270);
 
         image_mapa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/v.png"))); // NOI18N
         image_mapa.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -463,13 +588,11 @@ public class Gui extends javax.swing.JFrame {
             String ar = aristas.getSelectedItem().toString();
             int pes = (int) peso.getValue();
             Vertice temp = null;
-            System.out.println(ar);
             for (Vertice temporal : mapa.getVertices()) {
                 if (temporal.getNombre().equals(ar)) {
                     temp = temporal;
                 }
             }
-            System.out.println("");
             if (temp != null) {
                 Arista a = new Arista(temp, pes);
                 aristas_temp.add(a);
@@ -495,6 +618,78 @@ public class Gui extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Su mapa ya esta lleno", "ERROR", 2);
         }
     }//GEN-LAST:event_salvarActionPerformed
+
+    private void ModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModificarActionPerformed
+        Vertice temp = null;
+        int cont = 0;
+        for (Vertice temporal : mapa.getVertices()) {
+            if (inicio[0] > temporal.getArea()[0] && inicio[0] < temporal.getArea()[1] && inicio[1] > temporal.getArea()[2] && inicio[1] < temporal.getArea()[3]) {
+                break;
+            }
+            cont++;
+        }
+        Vertice v = mapa.getVertices().get(cont);
+        mnombre.setText(v.getNombre());
+        DefaultListModel model = new DefaultListModel();
+        for (Arista temporal : v.getAristas()) {
+            model.addElement(temporal);
+        }
+        lista.setModel(model);
+        DefaultComboBoxModel models = new DefaultComboBoxModel();
+        for (Vertice temporal : mapa.getVertices()) {
+            models.addElement(temporal.getNombre());
+        }
+        maristas.setModel(models);
+        modificarv.pack();
+        modificarv.setModal(true);
+        modificarv.setLocationRelativeTo(this);
+        modificarv.setVisible(true);
+    }//GEN-LAST:event_ModificarActionPerformed
+
+    private void magregar_aristaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_magregar_aristaActionPerformed
+        String ar = maristas.getSelectedItem().toString();
+        int pes = (int) mpeso.getValue();
+        int cont = 0;
+        for (Vertice temporal : mapa.getVertices()) {
+            if (inicio[0] > temporal.getArea()[0] && inicio[0] < temporal.getArea()[1] && inicio[1] > temporal.getArea()[2] && inicio[1] < temporal.getArea()[3]) {
+                break;
+            }
+            cont++;
+        }
+        Vertice v = mapa.getVertices().get(cont);
+        Vertice temp = null;
+        for (Vertice temporal : mapa.getVertices()) {
+            if (temporal.getNombre().equals(ar)) {
+                temp = temporal;
+            }
+        }
+        if (temp != null) {
+            Arista a = new Arista(temp, pes);
+            v.getAristas().add(a);
+        }
+        DefaultListModel model = new DefaultListModel();
+        for (Arista temporal : v.getAristas()) {
+            model.addElement(temporal);
+        }
+        lista.setModel(model);
+        maristas.setSelectedIndex(0);
+        mpeso.setValue(0);
+    }//GEN-LAST:event_magregar_aristaActionPerformed
+
+    private void msalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_msalvarActionPerformed
+        int cont = 0;
+        for (Vertice temporal : mapa.getVertices()) {
+            if (inicio[0] > temporal.getArea()[0] && inicio[0] < temporal.getArea()[1] && inicio[1] > temporal.getArea()[2] && inicio[1] < temporal.getArea()[3]) {
+                break;
+            }
+            cont++;
+        }
+        Vertice v = mapa.getVertices().get(cont);
+        v.setNombre(mnombre.getText().toUpperCase());
+        mnombre.setText("");
+        drawPlanets();
+        modificarv.setVisible(false);
+    }//GEN-LAST:event_msalvarActionPerformed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -531,7 +726,7 @@ public class Gui extends javax.swing.JFrame {
         try {
             sc = new Scanner(archivo);
             sc.useDelimiter(";");
-            while (sc.hasNext() && mapa.getVertices().size() <= 9) {
+            while (sc.hasNext()) {
                 String planeta = sc.next();
                 planeta = planeta.replaceAll("\n", "");
                 planeta = planeta.toUpperCase();
@@ -542,7 +737,6 @@ public class Gui extends javax.swing.JFrame {
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Formato Invalido", "ERROR", 2);
-
         }
     }
 
@@ -564,27 +758,28 @@ public class Gui extends javax.swing.JFrame {
                 }
             }
             //Creacion
-            if (nuevo && nuevo2) {
+            if (nuevo && nuevo2 && mapa.getVertices().size() < 9) {
                 Vertice v = new Vertice(nombre);
                 Vertice d = new Vertice(destino);
                 v.addArista(new Arista(d, peso));
                 mapa.addVertice(v);
                 mapa.addVertice(d);
-            } else if (nuevo) {
+            } else if (nuevo && mapa.getVertices().size() < 9) {
                 Vertice v = new Vertice(nombre);
                 v.addArista(new Arista(temp2, peso));
                 mapa.addVertice(v);
-            } else if (nuevo2) {
+            } else if (nuevo2 && mapa.getVertices().size() < 9) {
                 Vertice d = new Vertice(destino);
                 temp1.addArista(new Arista(d, peso));
                 mapa.addVertice(d);
-            } else {
+            } else if (!nuevo && !nuevo2) {
                 if (!temp1.getNombre().equals(temp2.getNombre())) {
                     temp1.addArista(new Arista(temp2, peso));
                 }
             }
 
         } catch (Exception e) {
+            e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error al crear el grafo", "ERROR", 2);
 
         }
@@ -601,6 +796,7 @@ public class Gui extends javax.swing.JFrame {
             for (Vertice temporal : mapa.getVertices()) {
                 if (temporal.getNombre().equals("MERCURIO")) {
                     temp = ImageIO.read(new File("./src/Imagenes/1.png"));
+
                     v = temporal;
                 } else if (temporal.getNombre().equals("VENUS")) {
                     temp = ImageIO.read(new File("./src/Imagenes/2.png"));
@@ -627,9 +823,16 @@ public class Gui extends javax.swing.JFrame {
                     temp = ImageIO.read(new File("./src/Imagenes/9.png"));
                     v = temporal;
                 } else {
-                    Random r = new Random();
-                    temp = ImageIO.read(new File("./src/Imagenes/" + (r.nextInt(5) + 10) + ".png"));
-                    v = temporal;
+                    if (temporal.getQ() == 0) {
+                        Random r = new Random();
+                        int n = r.nextInt(5) + 10;
+                        temporal.setQ(n);
+                        temp = ImageIO.read(new File("./src/Imagenes/" + (n) + ".png"));
+                        v = temporal;
+                    } else {
+                        temp = ImageIO.read(new File("./src/Imagenes/" + temporal.getQ() + ".png"));
+                        v = temporal;
+                    }
                 }
                 if (conteo == 0) {
                     g.drawImage(temp, null, 150, 50);
@@ -725,14 +928,25 @@ public class Gui extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JList lista;
+    private javax.swing.JButton magregar_arista;
+    private javax.swing.JComboBox maristas;
     private javax.swing.JMenuBar menu;
     private javax.swing.JPanel menu1;
     private javax.swing.JPanel menu2;
     private javax.swing.JPopupMenu menupop;
     private javax.swing.JPopupMenu menupop2;
+    private javax.swing.JTextField mnombre;
+    private javax.swing.JDialog modificarv;
+    private javax.swing.JSpinner mpeso;
+    private javax.swing.JButton msalvar;
     private javax.swing.JTextField nombre;
     private javax.swing.JMenu opciones;
     private javax.swing.JLabel panel;

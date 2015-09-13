@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Vertice {
     int x;
     int y;
+    int q;
     private String nombre;
     private ArrayList <Arista> aristas;
     int area[];
@@ -14,8 +15,18 @@ public class Vertice {
         this.aristas = new ArrayList();
         x=0;
         y=0;
+        q=0;
         area=new int[4];
     }
+
+    public int getQ() {
+        return q;
+    }
+
+    public void setQ(int q) {
+        this.q = q;
+    }
+    
 
     public int[] getArea() {
         return area;
@@ -83,7 +94,7 @@ public class Vertice {
 
     @Override
     public String toString() {
-        return "Vertice " + "nombre= " + nombre;
+        return nombre;
     }
     
 }
