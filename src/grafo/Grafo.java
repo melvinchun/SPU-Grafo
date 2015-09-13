@@ -21,8 +21,23 @@ public class Grafo {
     public void addVertice(Vertice nueva) {
         vertices.add(nueva);
     }
-
-    public void deleteArista(int pos) {
+    public void deleteVertice(int pos) {
+        boolean borrado=false;
+        for (Vertice temporal : vertices) {
+            int cont = 0;
+            for (Arista temporal1 : temporal.getAristas()) {
+                if (temporal1.getDestino().getNombre().equals(vertices.get(pos).getNombre())) {
+                    borrado=true;
+                    break;
+                }
+                cont++;
+            }
+            if(borrado){
+                temporal.deleteArista(cont);
+                borrado=false;
+            }
+            
+        }
         vertices.remove(pos);
     }
 

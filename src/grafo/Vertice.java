@@ -3,12 +3,29 @@ package grafo;
 import java.util.ArrayList;
 
 public class Vertice {
+    int x;
+    int y;
     private String nombre;
     private ArrayList <Arista> aristas;
+    int area[];
     
     public Vertice(String nombre) {
         this.nombre=nombre;
         this.aristas = new ArrayList();
+        x=0;
+        y=0;
+        area=new int[4];
+    }
+
+    public int[] getArea() {
+        return area;
+    }
+
+    public void setArea(int x1, int x2, int y1, int y2) {
+        this.area [0]= x1;
+        this.area [1]= x2;
+        this.area [2]= y1;
+        this.area [3]= y2;
     }
 
     public String getNombre() {
@@ -33,6 +50,27 @@ public class Vertice {
     
     public void deleteArista(int pos){
         aristas.remove(pos);
+    }
+    
+    public void setLocation(int x, int y){
+        this.x=x;
+        this.y=y;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
     
     public void print(){
