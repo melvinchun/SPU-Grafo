@@ -66,6 +66,8 @@ public class Gui extends javax.swing.JFrame {
         velocidad_warp = false;
         fin = null;
         Rviajes = new ArrayList();
+        nave = new Nave(155, 30, ImageIO.read(new File("./src/Imagenes/nave.png")));
+
     }
 
     @SuppressWarnings("unchecked")
@@ -647,43 +649,57 @@ public class Gui extends javax.swing.JFrame {
     private void b_viajarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_viajarActionPerformed
         if (!viaje.equals("Seleccione un destino")) {
             if (principio != null && fin != null) {
-                Viajes = new ArrayList();
-                SMA(new Viaje(principio), fin);
-                if (Viajes.size() > 0) {
-                    if (velocidad_warp) {
-                        for (Viaje temp : Viajes) {
-                            temp.warp();
+                if (principio.equals(nave.getPlaneta())) {
+                    Viajes = new ArrayList();
+                    SMA(new Viaje(principio), fin);
+                    if (Viajes.size() > 0) {
+                        if (velocidad_warp) {
+                            for (Viaje temp : Viajes) {
+                                temp.warp();
+                            }
+                            Viaje resultado = new Viaje("");
+                            for (Viaje temp : Viajes) {
+                                if (resultado.getCoste() > temp.getCoste() || resultado.getCoste() == -1) {
+                                    resultado = temp;
+                                }
+                            }
+                            String m[] = resultado.ToString();
+                            reporte.setText(m[0]);
+                            reporte1.setText(m[1]);
+                            Reportev.pack();
+                            Reportev.setModal(true);
+                            Reportev.setLocationRelativeTo(this);
+                            Reportev.setVisible(true);
+                            resultado.addPath("WARP");
+                            Rviajes.add(resultado);
+                        } else {
+                            Viaje resultado = new Viaje("");
+                            for (Viaje temp : Viajes) {
+                                if (resultado.getCoste() > temp.getCoste() || resultado.getCoste() == -1) {
+                                    resultado = temp;
+                                }
+                            }
+                            String m[] = resultado.ToString();
+                            reporte.setText(m[0]);
+                            reporte1.setText(m[1]);
+                            Reportev.pack();
+                            Reportev.setModal(true);
+                            Reportev.setLocationRelativeTo(this);
+                            Reportev.setVisible(true);
+                            Rviajes.add(resultado);
                         }
-                        Viaje resultado = new Viaje("");
-                        for (Viaje temp : Viajes) {
-                            if (resultado.getCoste() > temp.getCoste() || resultado.getCoste() == -1) {
-                                resultado = temp;
+                        nave.setPlaneta(fin);
+                        Vertice v = null;
+                        for (Vertice temp : mapa.getVertices()) {
+                            if (temp.getNombre().equals(fin)) {
+                                v = temp;
                             }
                         }
-                        String m[] = resultado.ToString();
-                        reporte.setText(m[0]);
-                        reporte1.setText(m[1]);
-                        Reportev.pack();
-                        Reportev.setModal(true);
-                        Reportev.setLocationRelativeTo(this);
-                        Reportev.setVisible(true);
-                        resultado.addPath("WARP");
-                        Rviajes.add(resultado);
-                    } else {
-                        Viaje resultado = new Viaje("");
-                        for (Viaje temp : Viajes) {
-                            if (resultado.getCoste() > temp.getCoste() || resultado.getCoste() == -1) {
-                                resultado = temp;
-                            }
+                        if (v != null) {
+                            nave.setX(v.getX() - 10);
+                            nave.setY(v.getY() - 10);
                         }
-                        String m[] = resultado.ToString();
-                        reporte.setText(m[0]);
-                        reporte1.setText(m[1]);
-                        Reportev.pack();
-                        Reportev.setModal(true);
-                        Reportev.setLocationRelativeTo(this);
-                        Reportev.setVisible(true);
-                        Rviajes.add(resultado);
+                        drawPlanets();
                     }
                 } else {
                     JOptionPane.showMessageDialog(this, "No se puede llegar a ese Planeta", "ERROR", 2);
@@ -992,7 +1008,7 @@ public class Gui extends javax.swing.JFrame {
     }//GEN-LAST:event_GuardarImgActionPerformed
 
     private void b_reportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_reportesActionPerformed
-        
+
         JFileChooser chooser = new JFileChooser();
         FileWriter fw = null;
         BufferedWriter bw = null;
@@ -1266,6 +1282,7 @@ public class Gui extends javax.swing.JFrame {
                 }
             }
         }
+        g.drawImage(nave.getImage(), null, nave.getX(), nave.getY());
         Image img;
         img = Toolkit.getDefaultToolkit().createImage(map.getSource()).getScaledInstance(700, 500, 0);
         image_mapa.setIcon(new ImageIcon(img));
@@ -1395,4 +1412,5 @@ public class Gui extends javax.swing.JFrame {
     ArrayList<Viaje> Rviajes;
     boolean velocidad_warp;
     Vertice modificado;
+    Nave nave;
 }
