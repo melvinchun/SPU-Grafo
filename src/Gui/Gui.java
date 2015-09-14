@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.EmptyStackException;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
@@ -118,6 +120,7 @@ public class Gui extends javax.swing.JFrame {
         b_warp = new javax.swing.JButton();
         viaje = new javax.swing.JLabel();
         b_reportes = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         image_mapa = new javax.swing.JLabel();
         panel = new javax.swing.JLabel();
         menu = new javax.swing.JMenuBar();
@@ -554,6 +557,18 @@ public class Gui extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setBackground(new java.awt.Color(0, 0, 0));
+        jButton1.setFont(new java.awt.Font("8BIT WONDER", 0, 14)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Regresar");
+        jButton1.setBorderPainted(false);
+        jButton1.setContentAreaFilled(false);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout menu2Layout = new javax.swing.GroupLayout(menu2);
         menu2.setLayout(menu2Layout);
         menu2Layout.setHorizontalGroup(
@@ -564,7 +579,9 @@ public class Gui extends javax.swing.JFrame {
                     .addComponent(viaje)
                     .addComponent(b_viajar)
                     .addComponent(b_warp)
-                    .addComponent(b_reportes))
+                    .addGroup(menu2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jButton1)
+                        .addComponent(b_reportes)))
                 .addContainerGap(102, Short.MAX_VALUE))
         );
         menu2Layout.setVerticalGroup(
@@ -578,11 +595,13 @@ public class Gui extends javax.swing.JFrame {
                 .addComponent(b_warp, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(b_reportes, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         getContentPane().add(menu2);
-        menu2.setBounds(440, 10, 450, 410);
+        menu2.setBounds(440, 10, 450, 430);
 
         image_mapa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/v.png"))); // NOI18N
         image_mapa.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1030,6 +1049,28 @@ public class Gui extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_b_reportesActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            menu2.setVisible(false);
+            image_mapa.setVisible(false);
+            menu1.setVisible(true);
+            map = null;
+            principio = null;
+            aristas_temp = null;
+            Viajes = null;
+            modificado = null;
+            b_iniciar.setVisible(false);
+            mapa = new Grafo();
+            inicio = new int[2];
+            destino = new int[2];
+            velocidad_warp = false;
+            fin = null;
+            Rviajes = new ArrayList();
+            nave = new Nave(155, 30, ImageIO.read(new File("./src/Imagenes/nave.png")));
+        } catch (IOException ex) {
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -1056,10 +1097,10 @@ public class Gui extends javax.swing.JFrame {
             return archivo;
         } catch (Exception e) {
             b_iniciar.setVisible(false);
-            mapa=null;
+            mapa = null;
             JOptionPane.showMessageDialog(this, "Error al cargar el archivo", "ERROR", 2);
             return null;
-           
+
         }
     }
 
@@ -1370,6 +1411,7 @@ public class Gui extends javax.swing.JFrame {
     private javax.swing.JMenuItem eliminarA;
     private javax.swing.JButton guardab;
     private javax.swing.JLabel image_mapa;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
