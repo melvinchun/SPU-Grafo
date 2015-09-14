@@ -9,9 +9,14 @@ import grafo.Arista;
 import grafo.Grafo;
 import grafo.Vertice;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Point;
+import java.awt.Polygon;
+import java.awt.Shape;
 import java.awt.Toolkit;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -59,6 +64,7 @@ public class Gui extends javax.swing.JFrame {
         inicio = new int[2];
         destino = new int[2];
         velocidad_warp = false;
+        fin = null;
     }
 
     @SuppressWarnings("unchecked")
@@ -112,7 +118,6 @@ public class Gui extends javax.swing.JFrame {
         panel = new javax.swing.JLabel();
         menu = new javax.swing.JMenuBar();
         opciones = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
 
         Eliminar.setText("Eliminar");
@@ -533,7 +538,7 @@ public class Gui extends javax.swing.JFrame {
         viaje.setBackground(new java.awt.Color(255, 255, 255));
         viaje.setFont(new java.awt.Font("8BIT WONDER", 1, 18)); // NOI18N
         viaje.setForeground(new java.awt.Color(255, 255, 255));
-        viaje.setText("Seleccione su ruta de viaje ");
+        viaje.setText("Seleccione un destino");
 
         javax.swing.GroupLayout menu2Layout = new javax.swing.GroupLayout(menu2);
         menu2.setLayout(menu2Layout);
@@ -585,9 +590,6 @@ public class Gui extends javax.swing.JFrame {
         opciones.setContentAreaFilled(false);
         opciones.setFocusable(false);
 
-        jMenuItem1.setText("jMenuItem1");
-        opciones.add(jMenuItem1);
-
         jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem2.setText("Salir");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
@@ -628,46 +630,48 @@ public class Gui extends javax.swing.JFrame {
     }//GEN-LAST:event_b_iniciarActionPerformed
 
     private void b_viajarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_viajarActionPerformed
-        if (principio != null && fin != null) {
-            Viajes = new ArrayList();
-            System.out.println(principio + " " + fin);
-            SMA(new Viaje(principio), fin);
-            System.out.println("El tamaño es: " + Viajes.size());
-            if (Viajes.size() > 0) {
-                if (velocidad_warp) {
-                    for (Viaje temp : Viajes) {
-                        temp.warp();
-                    }
-                    Viaje resultado = new Viaje("");
-                    for (Viaje temp : Viajes) {
-                        if (resultado.getCoste() > temp.getCoste() || resultado.getCoste() == -1) {
-                            resultado = temp;
+        if (!viaje.equals("Seleccione un destino")) {
+            if (principio != null && fin != null) {
+                Viajes = new ArrayList();
+                SMA(new Viaje(principio), fin);
+                if (Viajes.size() > 0) {
+                    if (velocidad_warp) {
+                        for (Viaje temp : Viajes) {
+                            temp.warp();
                         }
+                        Viaje resultado = new Viaje("");
+                        for (Viaje temp : Viajes) {
+                            if (resultado.getCoste() > temp.getCoste() || resultado.getCoste() == -1) {
+                                resultado = temp;
+                            }
+                        }
+                        String m[] = resultado.ToString();
+                        reporte.setText(m[0]);
+                        reporte1.setText(m[1]);
+                        Reportev.pack();
+                        Reportev.setModal(true);
+                        Reportev.setLocationRelativeTo(this);
+                        Reportev.setVisible(true);
+                    } else {
+                        Viaje resultado = new Viaje("");
+                        for (Viaje temp : Viajes) {
+                            if (resultado.getCoste() > temp.getCoste() || resultado.getCoste() == -1) {
+                                resultado = temp;
+                            }
+                        }
+                        String m[] = resultado.ToString();
+                        reporte.setText(m[0]);
+                        reporte1.setText(m[1]);
+                        Reportev.pack();
+                        Reportev.setModal(true);
+                        Reportev.setLocationRelativeTo(this);
+                        Reportev.setVisible(true);
                     }
-                    String m[] = resultado.ToString();
-                    reporte.setText(m[0]);
-                    reporte1.setText(m[1]);
-                    Reportev.pack();
-                    Reportev.setModal(true);
-                    Reportev.setLocationRelativeTo(this);
-                    Reportev.setVisible(true);
                 } else {
-                    Viaje resultado = new Viaje("");
-                    for (Viaje temp : Viajes) {
-                        if (resultado.getCoste() > temp.getCoste() || resultado.getCoste() == -1) {
-                            resultado = temp;
-                        }
-                    }
-                    String m[] = resultado.ToString();
-                    reporte.setText(m[0]);
-                    reporte1.setText(m[1]);
-                    Reportev.pack();
-                    Reportev.setModal(true);
-                    Reportev.setLocationRelativeTo(this);
-                    Reportev.setVisible(true);
+                    JOptionPane.showMessageDialog(this, "No se puede llegar a ese Planeta", "ERROR", 2);
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "No se puede llegar a ese Planeta", "ERROR", 2);
+                JOptionPane.showMessageDialog(this, "Seleccione un destino", "ERROR", 2);
             }
         }
     }//GEN-LAST:event_b_viajarActionPerformed
@@ -686,8 +690,6 @@ public class Gui extends javax.swing.JFrame {
     }//GEN-LAST:event_b_warpActionPerformed
 
     private void image_mapaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_image_mapaMouseReleased
-        principio = null;
-        fin = null;
         destino[0] = evt.getX();
         destino[1] = evt.getY();
         if (destino[0] > 0 && destino[1] > 0 && inicio[0] > 0 && inicio[1] > 0) {
@@ -703,9 +705,15 @@ public class Gui extends javax.swing.JFrame {
         if (principio != null && fin != null) {
             if (!principio.equals(fin)) {
                 viaje.setText(principio + " a " + fin);
+            } else {
+                viaje.setText("Seleccione un destino");
+                principio = null;
+                fin = null;
             }
         } else {
             viaje.setText("Seleccione un destino");
+            principio = null;
+            fin = null;
         }
 
     }//GEN-LAST:event_image_mapaMouseReleased
@@ -713,6 +721,8 @@ public class Gui extends javax.swing.JFrame {
     private void image_mapaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_image_mapaMousePressed
         inicio[0] = evt.getX();
         inicio[1] = evt.getY();
+        principio = null;
+        fin = null;
     }//GEN-LAST:event_image_mapaMousePressed
 
     private void image_mapaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_image_mapaMouseClicked
@@ -728,6 +738,7 @@ public class Gui extends javax.swing.JFrame {
             }
             if (z) {
                 menupop2.show(evt.getComponent(), evt.getX(), evt.getY());
+                fin = null;
             }
 
         }
@@ -767,22 +778,34 @@ public class Gui extends javax.swing.JFrame {
 
     private void agregar_aristaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregar_aristaActionPerformed
         if (mapa.getVertices().size() < 9) {
-            String ar = aristas.getSelectedItem().toString();
-            int pes = (int) peso.getValue();
-            Vertice temp = null;
-            for (Vertice temporal : mapa.getVertices()) {
-                if (temporal.getNombre().equals(ar)) {
-                    temp = temporal;
+            if ((int) peso.getValue() >= 0) {
+                String ar = aristas.getSelectedItem().toString();
+                int pes = (int) peso.getValue();
+                Vertice temp = null;
+                for (Vertice temporal : mapa.getVertices()) {
+                    if (temporal.getNombre().equals(ar)) {
+                        temp = temporal;
+                    }
                 }
+                if (temp != null) {
+                    boolean pasar = true;
+                    for (Arista temporal : aristas_temp) {
+                        if (temporal.getDestino().getNombre().equals(temp.getNombre())) {
+                            pasar = false;
+                        }
+                    }
+                    if (pasar) {
+                        Arista a = new Arista(temp, pes);
+                        aristas_temp.add(a);
+                    }
+                }
+                aristas.setSelectedIndex(0);
+                peso.setValue(0);
+            } else {
+                JOptionPane.showMessageDialog(agregarv, "El peso debe ser mayor que cero", "ERROR", 2);
             }
-            if (temp != null) {
-                Arista a = new Arista(temp, pes);
-                aristas_temp.add(a);
-            }
-            aristas.setSelectedIndex(0);
-            peso.setValue(0);
         } else {
-            JOptionPane.showMessageDialog(this, "Su mapa ya esta lleno", "ERROR", 2);
+            JOptionPane.showMessageDialog(agregarv, "Su mapa ya esta lleno", "ERROR", 2);
         }
 
     }//GEN-LAST:event_agregar_aristaActionPerformed
@@ -830,33 +853,46 @@ public class Gui extends javax.swing.JFrame {
     }//GEN-LAST:event_ModificarActionPerformed
 
     private void magregar_aristaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_magregar_aristaActionPerformed
-        String ar = maristas.getSelectedItem().toString();
-        int pes = (int) mpeso.getValue();
-        int cont = 0;
-        for (Vertice temporal : mapa.getVertices()) {
-            if (inicio[0] > temporal.getArea()[0] && inicio[0] < temporal.getArea()[1] && inicio[1] > temporal.getArea()[2] && inicio[1] < temporal.getArea()[3]) {
-                break;
+        if ((int) mpeso.getValue() >= 0) {
+            String ar = maristas.getSelectedItem().toString();
+            int pes = (int) mpeso.getValue();
+            int cont = 0;
+            for (Vertice temporal : mapa.getVertices()) {
+                if (inicio[0] > temporal.getArea()[0] && inicio[0] < temporal.getArea()[1] && inicio[1] > temporal.getArea()[2] && inicio[1] < temporal.getArea()[3]) {
+                    break;
+                }
+                cont++;
             }
-            cont++;
-        }
-        Vertice v = mapa.getVertices().get(cont);
-        Vertice temp = null;
-        for (Vertice temporal : mapa.getVertices()) {
-            if (temporal.getNombre().equals(ar)) {
-                temp = temporal;
+            Vertice v = mapa.getVertices().get(cont);
+            Vertice temp = null;
+            for (Vertice temporal : mapa.getVertices()) {
+                if (temporal.getNombre().equals(ar)) {
+                    temp = temporal;
+                }
             }
+            if (temp != null) {
+                boolean pasar = true;
+                for (Arista temporal : v.getAristas()) {
+                    if (temporal.getDestino().getNombre().equals(temp.getNombre()) || temp.getNombre().equals(v.getNombre())) {
+                        pasar = false;
+                    }
+                }
+                if (pasar) {
+                    Arista a = new Arista(temp, pes);
+                    v.getAristas().add(a);
+                }
+
+            }
+            DefaultListModel model = new DefaultListModel();
+            for (Arista temporal : v.getAristas()) {
+                model.addElement(temporal);
+            }
+            lista.setModel(model);
+            maristas.setSelectedIndex(0);
+            mpeso.setValue(0);
+        } else {
+            JOptionPane.showMessageDialog(modificarv, "Peso debe ser mayor que cero", "ERROR", 2);
         }
-        if (temp != null) {
-            Arista a = new Arista(temp, pes);
-            v.getAristas().add(a);
-        }
-        DefaultListModel model = new DefaultListModel();
-        for (Arista temporal : v.getAristas()) {
-            model.addElement(temporal);
-        }
-        lista.setModel(model);
-        maristas.setSelectedIndex(0);
-        mpeso.setValue(0);
     }//GEN-LAST:event_magregar_aristaActionPerformed
 
     private void msalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_msalvarActionPerformed
@@ -894,7 +930,7 @@ public class Gui extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Archivo guardado exitosamente", "Guardado", 1);
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al guardar la imagen", "ERROR", 2);
+            JOptionPane.showMessageDialog(this, "Error al guardar el archivo", "ERROR", 2);
         }
     }//GEN-LAST:event_guardabActionPerformed
 
@@ -902,7 +938,6 @@ public class Gui extends javax.swing.JFrame {
         if (evt.isMetaDown()) {
             menupop3.show(evt.getComponent(), evt.getX(), evt.getY());
         }
-
     }//GEN-LAST:event_listaMouseClicked
 
     private void eliminarAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarAActionPerformed
@@ -1086,59 +1121,70 @@ public class Gui extends javax.swing.JFrame {
                         v = temporal;
                     }
                 }
+                g.setColor(Color.WHITE);
+                g.setFont(new Font("SansSerif", Font.BOLD, 12));
                 if (conteo == 0) {
-                    g.drawImage(temp, null, 150, 50);
-                    map.setRGB(150 + temp.getWidth() / 2, 50 + temp.getHeight() / 2, Color.WHITE.getRGB());
-                    v.setArea(150, 150 + temp.getWidth(), 50, 50 + temp.getHeight());
-                    v.setLocation(150 + temp.getWidth() / 2, 50 + temp.getHeight() / 2);
+                    g.drawImage(temp, null, 150, 25);
+                    map.setRGB(150 + temp.getWidth() / 2, 25 + temp.getHeight() / 2, Color.WHITE.getRGB());
+                    v.setArea(150, 150 + temp.getWidth(), 25, 25 + temp.getHeight());
+                    g.drawString(v.getNombre(), 150 - 20, 20);
+                    v.setLocation(150 + temp.getWidth() / 2, 25 + temp.getHeight() / 2);
 
                 } else if (conteo == 1) {
-                    g.drawImage(temp, null, 300, 50);
-                    map.setRGB(300 + temp.getWidth() / 2, 50 + temp.getHeight() / 2, Color.WHITE.getRGB());
-                    v.setArea(300, 300 + temp.getWidth(), 50, 50 + temp.getHeight());
-                    v.setLocation(300 + temp.getWidth() / 2, 50 + temp.getHeight() / 2);
+                    g.drawImage(temp, null, 300, 85);
+                    map.setRGB(300 + temp.getWidth() / 2, 85 + temp.getHeight() / 2, Color.WHITE.getRGB());
+                    v.setArea(300, 300 + temp.getWidth(), 85, 85 + temp.getHeight());
+                    g.drawString(v.getNombre(), 300, 80);
+                    v.setLocation(300 + temp.getWidth() / 2, 85 + temp.getHeight() / 2);
 
                 } else if (conteo == 2) {
-                    g.drawImage(temp, null, 450, 50);
-                    map.setRGB(450 + temp.getWidth() / 2, 50 + temp.getHeight() / 2, Color.WHITE.getRGB());
-                    v.setArea(450, 450 + temp.getWidth(), 50, 50 + temp.getHeight());
-                    v.setLocation(450 + temp.getWidth() / 2, 50 + temp.getHeight() / 2);
+                    g.drawImage(temp, null, 475, 25);
+                    map.setRGB(475 + temp.getWidth() / 2, 25 + temp.getHeight() / 2, Color.WHITE.getRGB());
+                    v.setArea(475, 475 + temp.getWidth(), 25, 25 + temp.getHeight());
+                    g.drawString(v.getNombre(), 475, 20);
+                    v.setLocation(475 + temp.getWidth() / 2, 25 + temp.getHeight() / 2);
 
                 } else if (conteo == 3) {
-                    g.drawImage(temp, null, 50, 200);
-                    map.setRGB(50 + temp.getWidth() / 2, 200 + temp.getHeight() / 2, Color.WHITE.getRGB());
-                    v.setArea(50, 50 + temp.getWidth(), 200, 200 + temp.getHeight());
-                    v.setLocation(50 + temp.getWidth() / 2, 200 + temp.getHeight() / 2);
+                    g.drawImage(temp, null, 50, 225);
+                    map.setRGB(50 + temp.getWidth() / 2, 225 + temp.getHeight() / 2, Color.WHITE.getRGB());
+                    v.setArea(50, 50 + temp.getWidth(), 225, 225 + temp.getHeight());
+                    g.drawString(v.getNombre(), 50, 220);
+                    v.setLocation(50 + temp.getWidth() / 2, 225 + temp.getHeight() / 2);
 
                 } else if (conteo == 4) {
                     g.drawImage(temp, null, 300, 200);
                     map.setRGB(300 + temp.getWidth() / 2, 200 + temp.getHeight() / 2, Color.WHITE.getRGB());
                     v.setArea(300, 300 + temp.getWidth(), 200, 200 + temp.getHeight());
+                    g.drawString(v.getNombre(), 300, 195);
                     v.setLocation(300 + temp.getWidth() / 2, 200 + temp.getHeight() / 2);
 
                 } else if (conteo == 5) {
-                    g.drawImage(temp, null, 500, 200);
-                    map.setRGB(500 + temp.getWidth() / 2, 200 + temp.getHeight() / 2, Color.WHITE.getRGB());
-                    v.setArea(500, 500 + temp.getWidth(), 200, 200 + temp.getHeight());
-                    v.setLocation(500 + temp.getWidth() / 2, 200 + temp.getHeight() / 2);
+                    g.drawImage(temp, null, 575, 225);
+                    map.setRGB(575 + temp.getWidth() / 2, 225 + temp.getHeight() / 2, Color.WHITE.getRGB());
+                    v.setArea(575, 575 + temp.getWidth(), 225, 225 + temp.getHeight());
+                    g.drawString(v.getNombre(), 575, 220);
+                    v.setLocation(575 + temp.getWidth() / 2, 225 + temp.getHeight() / 2);
 
                 } else if (conteo == 6) {
-                    g.drawImage(temp, null, 150, 350);
-                    map.setRGB(150 + temp.getWidth() / 2, 350 + temp.getHeight() / 2, Color.WHITE.getRGB());
-                    v.setArea(150, 150 + temp.getWidth(), 350, 350 + temp.getHeight());
-                    v.setLocation(150 + temp.getWidth() / 2, 350 + temp.getHeight() / 2);
+                    g.drawImage(temp, null, 150, 415);
+                    map.setRGB(150 + temp.getWidth() / 2, 415 + temp.getHeight() / 2, Color.WHITE.getRGB());
+                    g.drawString(v.getNombre(), 150, 410);
+                    v.setArea(150, 150 + temp.getWidth(), 425, 415 + temp.getHeight());
+                    v.setLocation(150 + temp.getWidth() / 2, 415 + temp.getHeight() / 2);
 
                 } else if (conteo == 7) {
                     g.drawImage(temp, null, 300, 350);
                     map.setRGB(300 + temp.getWidth() / 2, 350 + temp.getHeight() / 2, Color.WHITE.getRGB());
                     v.setArea(300, 300 + temp.getWidth(), 350, 350 + temp.getHeight());
+                    g.drawString(v.getNombre(), 300, 345);
                     v.setLocation(300 + temp.getWidth() / 2, 350 + temp.getHeight() / 2);
 
                 } else if (conteo == 8) {
-                    g.drawImage(temp, null, 450, 350);
-                    map.setRGB(450 + temp.getWidth() / 2, 350 + temp.getHeight() / 2, Color.WHITE.getRGB());
-                    v.setArea(450, 450 + temp.getWidth(), 350, 350 + temp.getHeight());
-                    v.setLocation(450 + temp.getWidth() / 2, 350 + temp.getHeight() / 2);
+                    g.drawImage(temp, null, 475, 415);
+                    map.setRGB(475 + temp.getWidth() / 2, 415 + temp.getHeight() / 2, Color.WHITE.getRGB());
+                    v.setArea(475, 475 + temp.getWidth(), 415, 415 + temp.getHeight());
+                    g.drawString(v.getNombre(), 475, 410);
+                    v.setLocation(475 + temp.getWidth() / 2, 415 + temp.getHeight() / 2);
 
                 }
                 conteo++;
@@ -1152,17 +1198,66 @@ public class Gui extends javax.swing.JFrame {
 
     public void drawLines() {
         Graphics2D g = map.createGraphics();
+        g.setFont(new Font("SansSerif", Font.BOLD, 18));
         for (Vertice temporal : mapa.getVertices()) {
             for (Arista temp : temporal.getAristas()) {
+                g.setColor(Color.WHITE);
                 g.drawLine(temporal.getX(), temporal.getY(), temp.getDestino().getX(), temp.getDestino().getY());
-
+                int nx = (temporal.getX() + temp.getDestino().getX()) / 2;
+                int ny = (temporal.getY() + temp.getDestino().getY()) / 2;
+                g.setColor(Color.ORANGE);
+                if (temporal.getX() > temp.getDestino().getX() && temporal.getY() > temp.getDestino().getY()) {
+                    g.setColor(Color.BLUE);
+                    g.drawString(temp.getPeso() + "", nx + 10, ny - 3);
+                    g.fill(createArrowShape(new Point(temporal.getX(), temporal.getY()), new Point(temp.getDestino().getX(), temp.getDestino().getY())));
+                } else if (temporal.getX() < temp.getDestino().getX() && temporal.getY() > temp.getDestino().getY()) {
+                    g.setColor(Color.GREEN);
+                    g.drawString(temp.getPeso() + "", nx + 10, ny + 23);
+                    g.fill(createArrowShape(new Point(temporal.getX(), temporal.getY()), new Point(temp.getDestino().getX(), temp.getDestino().getY())));
+                } else if (temporal.getX() > temp.getDestino().getX() && temporal.getY() < temp.getDestino().getY()) {
+                    g.setColor(Color.RED);
+                    g.drawString(temp.getPeso() + "", nx - 15, ny - 5);
+                    g.fill(createArrowShape(new Point(temporal.getX(), temporal.getY()), new Point(temp.getDestino().getX(), temp.getDestino().getY())));
+                } else {
+                    g.setColor(Color.ORANGE);
+                    g.drawString(temp.getPeso() + "", nx + 5, ny - 10);
+                    g.fill(createArrowShape(new Point(temporal.getX(), temporal.getY()), new Point(temp.getDestino().getX(), temp.getDestino().getY())));
+                }
             }
-
         }
         Image img;
         img = Toolkit.getDefaultToolkit().createImage(map.getSource()).getScaledInstance(700, 500, 0);
         image_mapa.setIcon(new ImageIcon(img));
         image_mapa.setVisible(true);
+    }
+
+    public static Shape createArrowShape(Point fromPt, Point toPt) {
+        Polygon arrowPolygon = new Polygon();
+        arrowPolygon.addPoint(-6, 1);
+        arrowPolygon.addPoint(3, 1);
+        arrowPolygon.addPoint(3, 3);
+        arrowPolygon.addPoint(6, 0);
+        arrowPolygon.addPoint(3, -3);
+        arrowPolygon.addPoint(3, -1);
+        arrowPolygon.addPoint(-6, -1);
+
+        Point midPoint = midpoint(fromPt, toPt);
+
+        double rotate = Math.atan2(toPt.y - fromPt.y, toPt.x - fromPt.x);
+
+        AffineTransform transform = new AffineTransform();
+        transform.translate(midPoint.x, midPoint.y);
+        double ptDistance = fromPt.distance(toPt);
+        double scale = ptDistance / 60.0; // 12 because it's the length of the arrow polygon.
+        transform.scale(scale, scale);
+        transform.rotate(rotate);
+
+        return transform.createTransformedShape(arrowPolygon);
+    }
+
+    private static Point midpoint(Point p1, Point p2) {
+        return new Point((int) ((p1.x + p2.x) / 2.0),
+                (int) ((p1.y + p2.y) / 2.0));
     }
 
     public void SMA(Viaje recibir, String destino) {
@@ -1218,7 +1313,6 @@ public class Gui extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
