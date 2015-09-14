@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Grafo {
 
-    ArrayList<Vertice> vertices;
+    private ArrayList<Vertice> vertices;
 
     public Grafo() {
         this.vertices = new ArrayList();
@@ -21,22 +21,23 @@ public class Grafo {
     public void addVertice(Vertice nueva) {
         vertices.add(nueva);
     }
+
     public void deleteVertice(int pos) {
-        boolean borrado=false;
+        boolean borrado = false;
         for (Vertice temporal : vertices) {
             int cont = 0;
             for (Arista temporal1 : temporal.getAristas()) {
                 if (temporal1.getDestino().getNombre().equals(vertices.get(pos).getNombre())) {
-                    borrado=true;
+                    borrado = true;
                     break;
                 }
                 cont++;
             }
-            if(borrado){
+            if (borrado) {
                 temporal.deleteArista(cont);
-                borrado=false;
+                borrado = false;
             }
-            
+
         }
         vertices.remove(pos);
     }

@@ -1,6 +1,7 @@
 package grafo;
 
 public class Arista {
+
     private Vertice destino;
     private int peso;
 
@@ -34,6 +35,5 @@ public class Arista {
     public String toString() {
         return "Destino: " + destino + ", peso: " + peso;
     }
-    
-    
+
 }

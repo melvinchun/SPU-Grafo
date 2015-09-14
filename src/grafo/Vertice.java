@@ -3,20 +3,21 @@ package grafo;
 import java.util.ArrayList;
 
 public class Vertice {
-    int x;
-    int y;
-    int q;
+
+    private int x;
+    private int y;
+    private int q;
     private String nombre;
-    private ArrayList <Arista> aristas;
-    int area[];
-    
+    private ArrayList<Arista> aristas;
+    private int area[];
+
     public Vertice(String nombre) {
-        this.nombre=nombre;
+        this.nombre = nombre;
         this.aristas = new ArrayList();
-        x=0;
-        y=0;
-        q=0;
-        area=new int[4];
+        x = 0;
+        y = 0;
+        q = 0;
+        area = new int[4];
     }
 
     public int getQ() {
@@ -26,17 +27,16 @@ public class Vertice {
     public void setQ(int q) {
         this.q = q;
     }
-    
 
     public int[] getArea() {
         return area;
     }
 
     public void setArea(int x1, int x2, int y1, int y2) {
-        this.area [0]= x1;
-        this.area [1]= x2;
-        this.area [2]= y1;
-        this.area [3]= y2;
+        this.area[0] = x1;
+        this.area[1] = x2;
+        this.area[2] = y1;
+        this.area[3] = y2;
     }
 
     public String getNombre() {
@@ -54,18 +54,18 @@ public class Vertice {
     public void setAristas(ArrayList<Arista> aristas) {
         this.aristas = aristas;
     }
-    
-    public void addArista(Arista nueva){
+
+    public void addArista(Arista nueva) {
         aristas.add(nueva);
     }
-    
-    public void deleteArista(int pos){
+
+    public void deleteArista(int pos) {
         aristas.remove(pos);
     }
-    
-    public void setLocation(int x, int y){
-        this.x=x;
-        this.y=y;
+
+    public void setLocation(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
     public int getX() {
@@ -83,11 +83,19 @@ public class Vertice {
     public void setY(int y) {
         this.y = y;
     }
-    
-    public void print(){
+
+    public boolean hasArista() {
+        if (aristas.size() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void print() {
         System.out.println(nombre);
         for (Arista temp : aristas) {
-            System.out.print("\t"+temp.toString());
+            System.out.print("\t" + temp.toString());
         }
         System.out.println();
     }
@@ -96,5 +104,5 @@ public class Vertice {
     public String toString() {
         return nombre;
     }
-    
+
 }
