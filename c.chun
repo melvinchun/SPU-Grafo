@@ -1,0 +1,13 @@
+mercurio;1;venus;
+venus;2;tierra;
+marte;7;mercurio;
+Venus;3;marte;
+tierra;1;Jupiter;
+tierra;3;saturno;
+neptuno;6;marte;
+Jupiter;4;urano;
+saturno;2;urano;
+saturno;1;pluton;
+pluton;3;urano;
+Jupiter;5;Neptuno;
+urano;5;mercurio;
