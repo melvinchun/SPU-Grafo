@@ -736,7 +736,7 @@
     <Container class="javax.swing.JPanel" name="menu2">
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="440" y="10" width="450" height="280"/>
+          <AbsoluteConstraints x="440" y="10" width="450" height="410"/>
         </Constraint>
       </Constraints>
 
@@ -749,8 +749,9 @@
                       <Component id="viaje" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="b_viajar" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="b_warp" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="b_reportes" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="102" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -763,7 +764,9 @@
                   <Component id="b_viajar" min="-2" pref="93" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="b_warp" min="-2" pref="93" max="-2" attributes="0"/>
-                  <EmptySpace pref="28" max="32767" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="b_reportes" min="-2" pref="93" max="-2" attributes="0"/>
+                  <EmptySpace pref="47" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -812,6 +815,21 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Seleccione un destino"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="b_reportes">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Imagenes/reporte.png"/>
+            </Property>
+            <Property name="borderPainted" type="boolean" value="false"/>
+            <Property name="contentAreaFilled" type="boolean" value="false"/>
+            <Property name="rolloverIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Imagenes/reporte-.png"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="b_reportesActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

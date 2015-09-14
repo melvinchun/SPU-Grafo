@@ -65,6 +65,7 @@ public class Gui extends javax.swing.JFrame {
         destino = new int[2];
         velocidad_warp = false;
         fin = null;
+        Rviajes = new ArrayList();
     }
 
     @SuppressWarnings("unchecked")
@@ -114,6 +115,7 @@ public class Gui extends javax.swing.JFrame {
         b_viajar = new javax.swing.JButton();
         b_warp = new javax.swing.JButton();
         viaje = new javax.swing.JLabel();
+        b_reportes = new javax.swing.JButton();
         image_mapa = new javax.swing.JLabel();
         panel = new javax.swing.JLabel();
         menu = new javax.swing.JMenuBar();
@@ -540,6 +542,16 @@ public class Gui extends javax.swing.JFrame {
         viaje.setForeground(new java.awt.Color(255, 255, 255));
         viaje.setText("Seleccione un destino");
 
+        b_reportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/reporte.png"))); // NOI18N
+        b_reportes.setBorderPainted(false);
+        b_reportes.setContentAreaFilled(false);
+        b_reportes.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/reporte-.png"))); // NOI18N
+        b_reportes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_reportesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout menu2Layout = new javax.swing.GroupLayout(menu2);
         menu2.setLayout(menu2Layout);
         menu2Layout.setHorizontalGroup(
@@ -549,8 +561,9 @@ public class Gui extends javax.swing.JFrame {
                 .addGroup(menu2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(viaje)
                     .addComponent(b_viajar)
-                    .addComponent(b_warp))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(b_warp)
+                    .addComponent(b_reportes))
+                .addContainerGap(102, Short.MAX_VALUE))
         );
         menu2Layout.setVerticalGroup(
             menu2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -561,11 +574,13 @@ public class Gui extends javax.swing.JFrame {
                 .addComponent(b_viajar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(b_warp, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(b_reportes, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
         getContentPane().add(menu2);
-        menu2.setBounds(440, 10, 450, 280);
+        menu2.setBounds(440, 10, 450, 410);
 
         image_mapa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/v.png"))); // NOI18N
         image_mapa.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -652,6 +667,8 @@ public class Gui extends javax.swing.JFrame {
                         Reportev.setModal(true);
                         Reportev.setLocationRelativeTo(this);
                         Reportev.setVisible(true);
+                        resultado.addPath("WARP");
+                        Rviajes.add(resultado);
                     } else {
                         Viaje resultado = new Viaje("");
                         for (Viaje temp : Viajes) {
@@ -666,6 +683,7 @@ public class Gui extends javax.swing.JFrame {
                         Reportev.setModal(true);
                         Reportev.setLocationRelativeTo(this);
                         Reportev.setVisible(true);
+                        Rviajes.add(resultado);
                     }
                 } else {
                     JOptionPane.showMessageDialog(this, "No se puede llegar a ese Planeta", "ERROR", 2);
@@ -972,6 +990,29 @@ public class Gui extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error al guardar la imagen", "ERROR", 2);
         }
     }//GEN-LAST:event_GuardarImgActionPerformed
+
+    private void b_reportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_reportesActionPerformed
+        
+        JFileChooser chooser = new JFileChooser();
+        FileWriter fw = null;
+        BufferedWriter bw = null;
+        chooser.setDialogTitle("Especifique un Nombre");
+        int result = chooser.showSaveDialog(this);
+        try {
+            if (result == chooser.APPROVE_OPTION) {
+                File outputfile = new File(chooser.getSelectedFile() + ".txt");
+                fw = new FileWriter(outputfile, false);
+                bw = new BufferedWriter(fw);
+                for (Viaje temp : Rviajes) {
+                    bw.write(temp.toString() + "\n");
+                    bw.flush();
+                }
+                JOptionPane.showMessageDialog(this, "Archivo guardado exitosamente", "Guardado", 1);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al guardar el archivo", "ERROR", 2);
+        }
+    }//GEN-LAST:event_b_reportesActionPerformed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -1303,6 +1344,7 @@ public class Gui extends javax.swing.JFrame {
     private javax.swing.JComboBox aristas;
     private javax.swing.JButton b_cargar;
     private javax.swing.JButton b_iniciar;
+    private javax.swing.JButton b_reportes;
     private javax.swing.JButton b_viajar;
     private javax.swing.JButton b_warp;
     private javax.swing.JMenuItem eliminarA;
@@ -1350,6 +1392,7 @@ public class Gui extends javax.swing.JFrame {
     String fin;
     ArrayList<Arista> aristas_temp;
     ArrayList<Viaje> Viajes;
+    ArrayList<Viaje> Rviajes;
     boolean velocidad_warp;
     Vertice modificado;
 }

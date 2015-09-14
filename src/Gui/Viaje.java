@@ -67,11 +67,11 @@ public class Viaje {
 
     public String[] ToString() {
         String m[] = new String[2];
-         m[0]=""; 
+        m[0] = "";
         for (int i = 0; i < path.size(); i++) {
             m[0] += "-" + path.get(i);
         }
-        m[1]="\nCon coste de " + getCoste();
+        m[1] = "\nCon coste de " + getCoste();
         return m;
     }
 
@@ -81,6 +81,15 @@ public class Viaje {
         } catch (Throwable ex) {
             ex.printStackTrace();
         }
+    }
+
+    @Override
+    public String toString() {
+        String m = "";
+        for (int i = 0; i < path.size(); i++) {
+            m += "-" + path.get(i);
+        }
+        return m + "\n coste de: " + getCoste();
     }
 
     public Viaje clonar() {
