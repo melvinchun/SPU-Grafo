@@ -1055,8 +1055,11 @@ public class Gui extends javax.swing.JFrame {
             }
             return archivo;
         } catch (Exception e) {
+            b_iniciar.setVisible(false);
+            mapa=null;
             JOptionPane.showMessageDialog(this, "Error al cargar el archivo", "ERROR", 2);
             return null;
+           
         }
     }
 
