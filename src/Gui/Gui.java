@@ -1368,7 +1368,7 @@ public class Gui extends javax.swing.JFrame {
         //Buscar nodo
         Vertice temp = null;
         for (Vertice temporal : mapa.getVertices()) {
-            if (recibir.getPath().get(recibir.getPath().size() - 1).equals(temporal.getNombre())) {
+            if (clon.getPath().get(recibir.getPath().size() - 1).equals(temporal.getNombre())) {
                 temp = temporal;
             }
         }
